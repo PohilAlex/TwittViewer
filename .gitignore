@@ -1,0 +1,12 @@
+# generated folder
+bin
+gen
+
+# local
+local.properties
+proguard.cfg
+
+#idea
+*.idea
+*.iml
+out/
