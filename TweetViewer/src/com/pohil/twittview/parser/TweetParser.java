@@ -1,6 +1,5 @@
 package com.pohil.twittview.parser;
 
-import com.pohil.twittview.api.TweetRequest;
 import com.pohil.twittview.model.Tweet;
 import com.pohil.twittview.model.TweetResponse;
 import org.json.JSONArray;
@@ -23,7 +22,9 @@ public class TweetParser implements Parser<TweetResponse>{
             JSONObject json = new JSONObject(data);
             JSONObject metadata = json.getJSONObject("search_metadata");
             response.count = Integer.parseInt(metadata.getString("count"));
-            response.nextResultsUrl = metadata.getString("next_results");
+            if  (metadata.has("next_results")) {
+                response.nextResultsUrl = metadata.getString("next_results");
+            }
             JSONArray statuses = json.getJSONArray("statuses");
             for (int i = 0; i < statuses.length(); i++) {
                 JSONObject status = statuses.getJSONObject(i);

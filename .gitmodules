@@ -1,0 +1,6 @@
+[submodule "ActionBar-PullToRefresh"]
+	path = ActionBar-PullToRefresh
+	url = git@github.com:chrisbanes/ActionBar-PullToRefresh.git
+[submodule "SmoothProgressBar"]
+	path = SmoothProgressBar
+	url = git@github.com:castorflex/SmoothProgressBar.git

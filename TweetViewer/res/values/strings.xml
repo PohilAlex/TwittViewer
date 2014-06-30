@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TweetViewer</string>
+    <string name="empty_text">Enter the hashtag for search</string>
+    <string name="load_text">Loading...</string>
+</resources>

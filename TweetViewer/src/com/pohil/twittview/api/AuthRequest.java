@@ -44,6 +44,11 @@ public class AuthRequest extends JsonRequest<String> {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
+            /*try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             return Response.success(parser.parse(jsonString),
                     HttpHeaderParser.parseCacheHeaders(response));

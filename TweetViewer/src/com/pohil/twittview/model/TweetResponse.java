@@ -8,4 +8,8 @@ public class TweetResponse {
     public int count;
     public String nextResultsUrl;
 
+    public boolean hasNextResults() {
+        return nextResultsUrl != null;
+    }
+
 }

@@ -3,12 +3,12 @@
           package="com.pohil.twittview"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="12"
+    <uses-sdk android:minSdkVersion="14"
             android:targetSdkVersion="19"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".App">
-        <activity android:name="MainActivity"
+        <activity android:name=".ui.MainActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

@@ -23,7 +23,14 @@ public class NetworkManager {
     }
 
     public void send(Request request) {
-        requestQueue.add(request);
+        if (request != null) {
+            requestQueue.add(request);
+        }
+    }
+
+    public void cancel(Object tag) {
+        requestQueue.cancelAll(tag);
+
     }
 
     public ImageLoader getImageLoader() {
