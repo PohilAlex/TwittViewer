@@ -34,6 +34,13 @@ public class StatusViewMonitor {
         statusView.setText(R.string.load_text);
     }
 
+    public void customStatus(String msg) {
+        listView.setVisibility(View.INVISIBLE);
+        statusView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+        statusView.setText(msg);
+    }
+
     public void loadedStatus() {
         listView.postDelayed(new Runnable() {
             @Override

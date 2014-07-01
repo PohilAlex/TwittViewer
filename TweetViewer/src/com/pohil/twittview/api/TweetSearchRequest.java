@@ -9,8 +9,13 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonRequest;
 import com.pohil.twittview.model.TweetResponse;
 import com.pohil.twittview.parser.TweetParser;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TweetSearchRequest extends JsonRequest<TweetResponse> {
@@ -30,7 +35,10 @@ public class TweetSearchRequest extends JsonRequest<TweetResponse> {
         if (builder.nextPage != null) {
             return SEARCH_URL + builder.nextPage;
         } else {
-            return SEARCH_URL + "?q=" + builder.hashTag;
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("q", builder.hashTag));
+            String paramString = URLEncodedUtils.format(params, "utf-8");
+            return SEARCH_URL + "?" + paramString;
         }
     }
 

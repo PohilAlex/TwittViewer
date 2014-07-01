@@ -3,4 +3,8 @@
     <string name="app_name">TweetViewer</string>
     <string name="empty_text">Enter the hashtag for search</string>
     <string name="load_text">Loading...</string>
+    <string name="no_internet_msg">No internet connection</string>
+    <string name="generic_server_down">Server is not available</string>
+    <string name="generic_error">Some error</string>
+
 </resources>

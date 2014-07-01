@@ -20,6 +20,8 @@ import com.pohil.twittview.api.AuthRequest;
 import com.pohil.twittview.api.TweetSearchRequest;
 import com.pohil.twittview.model.Tweet;
 import com.pohil.twittview.model.TweetResponse;
+import com.pohil.twittview.utils.TweetUtils;
+import com.pohil.twittview.utils.VolleyErrorHelper;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -107,14 +109,13 @@ public class MainActivity extends Activity implements OnRefreshListener, LoadMor
             App.getNetworkManager().send(createTweetRequest(createSearchNextBuilder()));
         }  else {
             listView.onLoadMoreComplete();
-            //Toast.makeText(this, "Finish", Toast.LENGTH_LONG).show();
         }
     }
 
     private TweetSearchRequest.TweetSearchBuilder createSearchBuilder() {
         return TweetSearchRequest.createSearchBuilder()
             .setToken(App.getPreferenceManager().getAuthToken())
-            .setHashTag(searchTag);
+            .setHashTag(TweetUtils.createTag(searchTag));
     }
 
     private TweetSearchRequest.TweetSearchBuilder createSearchNextBuilder() {
@@ -136,8 +137,10 @@ public class MainActivity extends Activity implements OnRefreshListener, LoadMor
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
+                String msg = VolleyErrorHelper.getMessage(volleyError, MainActivity.this);
+                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
                 Log.d("TEST", volleyError.getMessage());
+                statusMonitor.customStatus(msg);
             }
         });
     }
@@ -164,13 +167,19 @@ public class MainActivity extends Activity implements OnRefreshListener, LoadMor
                     pullToRefreshLayout.setRefreshComplete();
                 }
                 statusMonitor.loadedStatus();
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
-                Log.d("TEST", "Error");
+                if (VolleyErrorHelper.isAuthProblem(volleyError)) {
+                    App.getPreferenceManager().setAuthToken("");
+                    App.getNetworkManager().send(createAuthRequest());
+                } else {
+                    String msg = VolleyErrorHelper.getMessage(volleyError, MainActivity.this);
+                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    Log.d("TEST", msg);
+                    statusMonitor.customStatus(msg);
+                }
             }
         });
     }
