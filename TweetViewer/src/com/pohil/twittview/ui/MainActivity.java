@@ -2,6 +2,8 @@ package com.pohil.twittview.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.RequestFuture;
+import com.nhaarman.listviewanimations.swinginadapters.prepared.AlphaInAnimationAdapter;
 import com.pohil.twittview.App;
 import com.pohil.twittview.R;
 import com.pohil.twittview.api.AuthRequest;
@@ -33,12 +36,14 @@ public class MainActivity extends Activity implements OnRefreshListener, LoadMor
 
     PullToRefreshLayout pullToRefreshLayout;
     LoadMoreListView listView;
+    SearchView searchView;
 
     List<Tweet> tweetList = new ArrayList<Tweet>();
-    TweetAdapter adapter;
+    AlphaInAnimationAdapter adapter;
     StatusViewMonitor statusMonitor;
     TweetResponse tweetResponse;
     String searchTag = "";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,23 @@ public class MainActivity extends Activity implements OnRefreshListener, LoadMor
             .setup(pullToRefreshLayout);
 
         listView = (LoadMoreListView) findViewById(R.id.tweet_list);
-        adapter = new TweetAdapter(this, tweetList);
+        TweetAdapter tweetAdapter = new TweetAdapter(this, tweetList);
+        tweetAdapter.setOnTagClickListener(new TweetAdapter.OnTagClickListener() {
+            @Override
+            public void onTagClicked(String tag) {
+                statusMonitor.loadingStatus();
+                searchView.setQuery(TweetUtils.parseTag(tag), true);
+            }
+        });
+        tweetAdapter.setOnUrlClickListener(new TweetAdapter.OnUrlClickListener() {
+            @Override
+            public void onUrlClicked(String url) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            }
+        });
+        adapter = new AlphaInAnimationAdapter(tweetAdapter);
+        adapter.setAbsListView(listView);
         listView.setAdapter(adapter);
         listView.setOnLoadMoreListener(this);
 
@@ -69,7 +90,7 @@ public class MainActivity extends Activity implements OnRefreshListener, LoadMor
         getMenuInflater().inflate(R.menu.search, menu);
 
         MenuItem searchViewItem = menu.findItem(R.id.menu_search);
-        final SearchView searchView = (SearchView) searchViewItem.getActionView();
+        searchView = (SearchView) searchViewItem.getActionView();
         searchView.onActionViewExpanded();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -165,6 +186,7 @@ public class MainActivity extends Activity implements OnRefreshListener, LoadMor
                     listView.onLoadMoreComplete();
                 } else {
                     pullToRefreshLayout.setRefreshComplete();
+                    adapter.reset();
                 }
                 statusMonitor.loadedStatus();
             }
@@ -183,6 +205,5 @@ public class MainActivity extends Activity implements OnRefreshListener, LoadMor
             }
         });
     }
-
 
 }

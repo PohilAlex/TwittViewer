@@ -10,4 +10,12 @@ public class TweetUtils {
         }
     }
 
+    public static String parseTag(String tag) {
+        if (tag.startsWith("#")) {
+            return tag.substring(1);
+        }  else {
+            return tag;
+        }
+    }
+
 }
