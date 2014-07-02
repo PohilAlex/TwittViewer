@@ -23,35 +23,21 @@
     android:id="@+id/load_more_footer"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/black" >
+    android:background="@android:color/transparent" >
 
-    <View
+    <!--<View
         android:id="@+id/top_line"
         android:layout_width="fill_parent"
         android:layout_height="0.5dp"
         android:layout_alignParentTop="true"
         android:background="#2F4F4F"
-        android:visibility="visible" />
+        android:visibility="visible" />-->
 
-    <!--
-        <TextView
-        android:id="@+id/load_more_lab_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:padding="3dp"
-        android:text="@string/load_more_post"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/dark_slate_gray" />
-
-
-    -->
 
     <ProgressBar
         android:id="@+id/load_more_progressBar"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:layout_centerInParent="true"
         android:indeterminate="true"
 

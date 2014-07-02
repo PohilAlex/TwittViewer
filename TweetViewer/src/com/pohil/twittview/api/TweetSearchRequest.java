@@ -25,8 +25,8 @@ public class TweetSearchRequest extends JsonRequest<TweetResponse> {
 
     String token;
 
-    public TweetSearchRequest(TweetSearchBuilder builder, Response.Listener<TweetResponse> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, buildSearchUrl(builder), null, listener, errorListener);
+    public TweetSearchRequest(TweetSearchBuilder builder, Response.Listener<TweetResponse> listener) {
+        super(Method.GET, buildSearchUrl(builder), null, listener, new BaseErrorListener(TweetSearchRequest.class));
         this.token = builder.token;
         this.setTag(REQUEST_TAG);
     }

@@ -5,6 +5,7 @@ import com.pohil.twittview.model.TweetResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +22,21 @@ public class TweetParser implements Parser<TweetResponse>{
         try {
             JSONObject json = new JSONObject(data);
             JSONObject metadata = json.getJSONObject("search_metadata");
-            response.count = Integer.parseInt(metadata.getString("count"));
+            response.setCount(metadata.getInt("count"));
             if  (metadata.has("next_results")) {
-                response.nextResultsUrl = metadata.getString("next_results");
+                response.setNextResultsUrl(metadata.getString("next_results"));
             }
             JSONArray statuses = json.getJSONArray("statuses");
             for (int i = 0; i < statuses.length(); i++) {
                 JSONObject status = statuses.getJSONObject(i);
                 Tweet tweet = new Tweet();
-                tweet.text = status.getString("text");
-                tweet.userPictureUrl = status.getJSONObject("user").getString("profile_image_url");
+                tweet.setText(status.getString("text"));
+                JSONObject user = status.getJSONObject("user");
+                tweet.setUserPictureUrl(user.getString("profile_image_url"));
+                tweet.setUserName(user.getString("name"));
                 tweetList.add(tweet);
             }
-            response.tweetList = tweetList;
+            response.setTweetList(tweetList);
         } catch (JSONException e) {
             e.printStackTrace();
         }

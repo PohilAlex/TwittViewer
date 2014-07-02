@@ -23,8 +23,8 @@ public class AuthRequest extends JsonRequest<String> {
 
     TokenParser parser;
 
-    public AuthRequest(Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.POST, AUTH_URL, AUTH_BODY, listener, errorListener);
+    public AuthRequest(Response.Listener<String> listener) {
+        super(Method.POST, AUTH_URL, AUTH_BODY, listener, new BaseErrorListener(AuthRequest.class));
         parser = new TokenParser();
     }
 
@@ -44,11 +44,6 @@ public class AuthRequest extends JsonRequest<String> {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
-            /*try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             return Response.success(parser.parse(jsonString),
                     HttpHeaderParser.parseCacheHeaders(response));

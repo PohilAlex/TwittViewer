@@ -14,7 +14,7 @@ public class StatusViewMonitor {
     TextView statusView;
     ProgressBar progressBar;
 
-    public StatusViewMonitor(Activity layout) {
+    public StatusViewMonitor(View layout) {
         listView = (ListView) layout.findViewById(R.id.tweet_list);
         statusView = (TextView) layout.findViewById(R.id.status_text);
         progressBar = (ProgressBar) layout.findViewById(R.id.load_progress);
@@ -39,6 +39,13 @@ public class StatusViewMonitor {
         statusView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         statusView.setText(msg);
+    }
+
+    public void nothingStatus() {
+        listView.setVisibility(View.INVISIBLE);
+        statusView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+        statusView.setText(R.string.nothing_found_text);
     }
 
     public void loadedStatus() {
