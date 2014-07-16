@@ -21,8 +21,8 @@ import java.util.List;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
 
-    private static final String TAG_REGEX = "#\\w+";
-    private static final String URL_REGEX = "http[s]?://\\S+";
+    public static final String TAG_REGEX = "#\\w+";
+    public static final String URL_REGEX = "http[s]?://\\S+";
 
     LayoutInflater inflater;
     OnTagClickListener tagClickListener;

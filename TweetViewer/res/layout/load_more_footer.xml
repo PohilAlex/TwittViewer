@@ -25,13 +25,13 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent" >
 
-    <!--<View
+    <View
         android:id="@+id/top_line"
         android:layout_width="fill_parent"
         android:layout_height="0.5dp"
         android:layout_alignParentTop="true"
         android:background="#2F4F4F"
-        android:visibility="visible" />-->
+        android:visibility="visible" />
 
 
     <ProgressBar
