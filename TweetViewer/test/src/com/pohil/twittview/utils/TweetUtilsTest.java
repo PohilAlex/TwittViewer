@@ -1,11 +1,9 @@
-package com.pohil.twitter.utils;
+package com.pohil.twittview.utils;
 
 import android.test.AndroidTestCase;
-import android.text.TextUtils;
 import com.pohil.twittview.model.Segment;
 import com.pohil.twittview.ui.TweetAdapter;
 import com.pohil.twittview.utils.TweetUtils;
-import junit.framework.Assert;
 
 import java.util.ArrayList;
 
