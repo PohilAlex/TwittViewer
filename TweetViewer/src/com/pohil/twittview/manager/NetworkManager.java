@@ -6,12 +6,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.pohil.twittview.utils.BitmapLruCache;
 
 public class NetworkManager {
 
     RequestQueue requestQueue;
     ImageLoader imageLoader;
+    Gson gson;
 
     public void init(Context context) {
         requestQueue = Volley.newRequestQueue(context);
@@ -20,6 +22,7 @@ public class NetworkManager {
         // Use 1/8th of the available memory for this memory cache.
         int cacheSize = 1024 * 1024 * memClass / 8;
         imageLoader = new ImageLoader(requestQueue, new BitmapLruCache(cacheSize));
+        gson = new Gson();
     }
 
     public void send(Request request) {
@@ -35,5 +38,9 @@ public class NetworkManager {
 
     public ImageLoader getImageLoader() {
         return imageLoader;
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 }

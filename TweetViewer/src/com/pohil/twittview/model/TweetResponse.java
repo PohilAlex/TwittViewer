@@ -1,15 +1,19 @@
 package com.pohil.twittview.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class TweetResponse {
 
+    @SerializedName("statuses")
     private List<Tweet> tweetList;
-    private int count;
-    private String nextResultsUrl;
+
+    @SerializedName("search_metadata")
+    private MetaData metaData;
 
     public boolean hasNextResults() {
-        return nextResultsUrl != null;
+        return metaData.nextResultsUrl != null;
     }
 
     public List<Tweet> getTweetList() {
@@ -21,18 +25,28 @@ public class TweetResponse {
     }
 
     public int getCount() {
-        return count;
+        return metaData.count;
     }
 
     public void setCount(int count) {
-        this.count = count;
+        this.metaData.count = count;
     }
 
     public String getNextResultsUrl() {
-        return nextResultsUrl;
+        return metaData.nextResultsUrl;
     }
 
     public void setNextResultsUrl(String nextResultsUrl) {
-        this.nextResultsUrl = nextResultsUrl;
+        this.metaData.nextResultsUrl = nextResultsUrl;
     }
+
+
+    class MetaData {
+        @SerializedName("count")
+        private int count;
+
+        @SerializedName("next_results")
+        private String nextResultsUrl;
+    }
+
 }

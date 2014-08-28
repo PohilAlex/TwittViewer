@@ -7,6 +7,8 @@ import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonRequest;
+import com.google.gson.reflect.TypeToken;
+import com.pohil.twittview.App;
 import com.pohil.twittview.model.TweetResponse;
 import com.pohil.twittview.parser.TweetParser;
 import org.apache.http.NameValuePair;
@@ -53,9 +55,8 @@ public class TweetSearchRequest extends JsonRequest<TweetResponse> {
     protected Response<TweetResponse> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            TweetParser parser = new TweetParser();
-            return Response.success(parser.parse(jsonString),
-                    HttpHeaderParser.parseCacheHeaders(response));
+            TweetResponse result = App.getNetworkManager().getGson().fromJson(jsonString, new TypeToken<TweetResponse>() {}.getType());
+            return Response.success(result,  HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
             e.printStackTrace();
             return Response.error(new ParseError(e));

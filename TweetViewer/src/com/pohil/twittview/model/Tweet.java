@@ -1,9 +1,18 @@
 package com.pohil.twittview.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class Tweet {
+    @SerializedName("text")
     private String text;
-    private String userPictureUrl;
-    private String userName;
+
+    @SerializedName("user")
+    private User user;
+
+    @SerializedName("entities")
+    private Entity entity;
 
     public String getText() {
         return text;
@@ -14,18 +23,31 @@ public class Tweet {
     }
 
     public String getUserPictureUrl() {
-        return userPictureUrl;
+        return user.userPictureUrl;
     }
 
     public void setUserPictureUrl(String userPictureUrl) {
-        this.userPictureUrl = userPictureUrl;
+        user.userPictureUrl = userPictureUrl;
     }
 
     public String getUserName() {
-        return userName;
+        return user.userName;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        user.userName = userName;
+    }
+
+    class User {
+        @SerializedName("profile_image_url")
+        private String userPictureUrl;
+
+        @SerializedName("name")
+        private String userName;
+    }
+
+    class Entity {
+        @SerializedName("urls")
+        List<TweetUrl> urlList;
     }
 }
